@@ -1,0 +1,48 @@
+.game {
+  display: flex;
+  align-items: center;
+}
+
+.board {
+  display: grid;
+  grid-template-rows: 100px 100px 100px;
+  grid-template-columns: 100px 100px 100px;
+  margin: 0 auto;
+}
+
+.board__cell {
+  border: 1px solid #000;
+}
+
+.player {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player1 {
+  background: rgb(216, 105, 105);
+  border-radius: 50%;
+}
+
+.player2 {
+  background: rgb(105, 118, 216);
+  border-radius: 50%;
+}
+
+.big {
+  width: 100px;
+  height: 100px;
+}
+
+.middle {
+  width: 75px;
+  height: 75px;
+}
+
+.small {
+  width: 50px;
+  height: 50px;
+}
