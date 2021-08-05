@@ -86,6 +86,17 @@
       const cell = event.target.closest(".board__cell");
       cell.appendChild(piece);
       globalThis.board.cells[cell.dataset.y][cell.dataset.x].pieces.push(new Piece(piece.dataset.player, 3));
+      if(globalThis.board.win(1)) {
+        if(globalThis.board.win(2)) {
+          document.getElementById("result").innerHTML = "draw";
+        } else {
+          document.getElementById("result").innerHTML = "win 1";
+        }
+      } else {
+        if(globalThis.board.win(2)) {
+          document.getElementById("result").innerHTML = "win 2";
+        }
+      }
       event.preventDefault();
     });
   });
