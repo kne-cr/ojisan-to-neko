@@ -1,5 +1,5 @@
 (() => {
-  let pieces = Array.from(document.getElementsByClassName("piece"));
+  const pieces = Array.from(document.getElementsByClassName("piece"));
   pieces.forEach(piece => {
     piece.addEventListener("dragstart", (event) => {
       console.log("dragstart");
@@ -9,7 +9,7 @@
       event.preventDefault();
     });
   });
-  let cells = Array.from(document.getElementsByClassName("board__cell"));
+  const cells = Array.from(document.getElementsByClassName("board__cell"));
   cells.forEach(cell => {
     cell.addEventListener("dragover", (event) => {
       event.preventDefault();
