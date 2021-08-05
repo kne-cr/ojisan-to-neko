@@ -12,14 +12,25 @@
 
 .board__cell {
   border: 1px solid #000;
+  position: relative;
 }
 
 .player {
-  width: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.player__piece {
+  position: relative;
+}
+
+.piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .player1 {
@@ -45,4 +56,16 @@
 .small {
   width: 50px;
   height: 50px;
+}
+
+.piece.big {
+  z-index: 103;
+}
+
+.piece.middle {
+  z-index: 102;
+}
+
+.piece.small {
+  z-index: 101;
 }
