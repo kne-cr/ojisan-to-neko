@@ -31,16 +31,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.player1 {
-  background: rgb(216, 105, 105);
-  border-radius: 50%;
-}
-
-.player2 {
-  background: rgb(105, 118, 216);
-  border-radius: 50%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .big {
@@ -49,8 +42,8 @@
 }
 
 .middle {
-  width: 75px;
-  height: 75px;
+  width: 70px;
+  height: 70px;
 }
 
 .small {
@@ -58,14 +51,32 @@
   height: 50px;
 }
 
-.piece.big {
+.player1.piece.big {
   z-index: 103;
+  background-image: url(../img/oji01@2x.png);
 }
 
-.piece.middle {
+.player1.piece.middle {
   z-index: 102;
+  background-image: url(../img/oji02@2x.png);
 }
 
-.piece.small {
+.player1.piece.small {
   z-index: 101;
+  background-image: url(../img/oji03@2x.png);
+}
+
+.player2.piece.big {
+  z-index: 103;
+  background-image: url(../img/neko01@2x.png);
+}
+
+.player2.piece.middle {
+  z-index: 102;
+  background-image: url(../img/neko02@2x.png);
+}
+
+.player2.piece.small {
+  z-index: 101;
+  background-image: url(../img/neko03@2x.png);
 }
