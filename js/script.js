@@ -33,7 +33,7 @@
       }
     }
 
-    win_horizontal(player) {
+    complete_horizontal(player) {
       return [0,1,2].some(col => {
         return [0,1,2].every(row => {
           return this.cells[col][row].player() == player;
@@ -41,7 +41,7 @@
       });
     }
 
-    win_vertical(player) {
+    complete_vertical(player) {
       return [0,1,2].some(row => {
         return [0,1,2].every(col => {
           return this.cells[col][row].player() == player;
@@ -49,7 +49,7 @@
       });
     }
 
-    win_diagonal(player) {
+    complete_diagonal(player) {
       if(
         this.cells[0][0].player() == player
         && this.cells[1][1].player() == player
@@ -65,18 +65,31 @@
     }
 
     win(player) {
-      if(this.win_vertical(player)) return true;
-      if(this.win_horizontal(player)) return true;
-      if(this.win_diagonal(player)) return true;
+      if(this.complete_vertical(player)) return true;
+      if(this.complete_horizontal(player)) return true;
+      if(this.complete_diagonal(player)) return true;
 
       return false;
+    }
+  }
+
+  const show_result = () => {
+    if(globalThis.board.win(1)) {
+      if(globalThis.board.win(2)) {
+        document.getElementById("result").innerHTML = "draw";
+      } else {
+        document.getElementById("result").innerHTML = "win 1";
+      }
+    } else {
+      if(globalThis.board.win(2)) {
+        document.getElementById("result").innerHTML = "win 2";
+      }
     }
   }
 
   const pieces = Array.from(document.getElementsByClassName("piece"));
   pieces.forEach(piece => {
     piece.addEventListener("dragstart", (event) => {
-      console.log("dragstart");
       event.dataTransfer.setData('piece_id', event.target.id);
     });
   });
@@ -86,6 +99,7 @@
     cell.addEventListener("dragover", (event) => {
       event.preventDefault();
     });
+
     cell.addEventListener("drop", (event) => {
       const piece = document.getElementById(event.dataTransfer.getData('piece_id'));
       const to_cell = event.target.closest(".board__cell");
@@ -93,23 +107,14 @@
         alert("置けません");
         return;
       }
+
       const from_cell = piece.closest(".board__cell");
       if(from_cell) {
         globalThis.board.cells[from_cell.dataset.y][from_cell.dataset.x].pieces.pop();
       }
       globalThis.board.cells[to_cell.dataset.y][to_cell.dataset.x].pieces.push(new Piece(piece.dataset.player, piece.dataset.size));
       cell.appendChild(piece);
-      if(globalThis.board.win(1)) {
-        if(globalThis.board.win(2)) {
-          document.getElementById("result").innerHTML = "draw";
-        } else {
-          document.getElementById("result").innerHTML = "win 1";
-        }
-      } else {
-        if(globalThis.board.win(2)) {
-          document.getElementById("result").innerHTML = "win 2";
-        }
-      }
+      show_result();
       event.preventDefault();
     });
   });
