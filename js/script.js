@@ -101,7 +101,7 @@
     }
   }
 
-  const replace_piece = (piece, to_cell) => {
+  const move_piece = (piece, to_cell) => {
     const from_cell = piece.closest(".board__cell");
     if(from_cell) {
       globalThis.board.remove(from_cell.dataset.x, from_cell.dataset.y);
@@ -115,15 +115,13 @@
 
   }
 
-  const pieces = Array.from(document.getElementsByClassName("piece"));
-  pieces.forEach(piece => {
+  Array.from(document.getElementsByClassName("piece")).forEach(piece => {
     piece.addEventListener("dragstart", (event) => {
       event.dataTransfer.setData('piece_id', event.target.id);
     });
   });
 
-  const cells = Array.from(document.getElementsByClassName("board__cell"));
-  cells.forEach(cell => {
+  Array.from(document.getElementsByClassName("board__cell")).forEach(cell => {
     cell.addEventListener("dragover", (event) => {
       event.preventDefault();
     });
@@ -136,7 +134,7 @@
         return;
       }
 
-      replace_piece(piece, to_cell);
+      move_piece(piece, to_cell);
       draw_display(piece, to_cell);
       event.preventDefault();
     });
