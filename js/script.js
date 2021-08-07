@@ -15,6 +15,11 @@
       if (!this.pieces.length) return 0;
       return this.pieces[this.pieces.length - 1].player;
     }
+
+    size() {
+      if (!this.pieces.length) return 0;
+      return this.pieces[this.pieces.length - 1].size;
+    }
   }
 
   class Board {
@@ -84,8 +89,12 @@
     cell.addEventListener("drop", (event) => {
       const piece = document.getElementById(event.dataTransfer.getData('piece_id'));
       const cell = event.target.closest(".board__cell");
+      if(piece.dataset.size <= globalThis.board.cells[cell.dataset.y][cell.dataset.x].size()){
+        alert("置けません");
+        return;
+      }
       cell.appendChild(piece);
-      globalThis.board.cells[cell.dataset.y][cell.dataset.x].pieces.push(new Piece(piece.dataset.player, 3));
+      globalThis.board.cells[cell.dataset.y][cell.dataset.x].pieces.push(new Piece(piece.dataset.player, piece.dataset.size));
       if(globalThis.board.win(1)) {
         if(globalThis.board.win(2)) {
           document.getElementById("result").innerHTML = "draw";
