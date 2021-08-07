@@ -11,14 +11,14 @@
       this.pieces = [];
     }
 
-    player() {
-      if (!this.pieces.length) return 0;
-      return this.pieces[this.pieces.length - 1].player;
+    can_place(size) {
+      if (!this.pieces.length) return true;
+      return size > this.pieces[this.pieces.length - 1].size;
     }
 
-    size() {
-      if (!this.pieces.length) return 0;
-      return this.pieces[this.pieces.length - 1].size;
+    is_territory_of(player) {
+      if (!this.pieces.length) return false;
+      return this.pieces[this.pieces.length - 1].player == player;
     }
   }
 
@@ -33,10 +33,22 @@
       }
     }
 
+    can_place(x, y, size) {
+      return this.cells[y][x].can_place(size);
+    }
+
+    place(x, y, player, size) {
+      this.cells[y][x].pieces.push(new Piece(player, size));
+    }
+
+    remove(x, y) {
+      this.cells[y][x].pieces.pop();
+    }
+
     complete_horizontal(player) {
       return [0,1,2].some(col => {
         return [0,1,2].every(row => {
-          return this.cells[col][row].player() == player;
+          return this.cells[col][row].is_territory_of(player);
         });
       });
     }
@@ -44,47 +56,63 @@
     complete_vertical(player) {
       return [0,1,2].some(row => {
         return [0,1,2].every(col => {
-          return this.cells[col][row].player() == player;
+          return this.cells[col][row].is_territory_of(player);
         });
       });
     }
 
     complete_diagonal(player) {
       if(
-        this.cells[0][0].player() == player
-        && this.cells[1][1].player() == player
-        && this.cells[2][2].player() == player
+        this.cells[0][0].is_territory_of(player)
+        && this.cells[1][1].is_territory_of(player)
+        && this.cells[2][2].is_territory_of(player)
       ) return true;
       if(
-        this.cells[0][2].player() == player
-        && this.cells[1][1].player() == player
-        && this.cells[2][0].player() == player
+        this.cells[0][2].is_territory_of(player)
+        && this.cells[1][1].is_territory_of(player)
+        && this.cells[2][0].is_territory_of(player)
       ) return true;
 
       return false;
     }
 
-    win(player) {
+    complete_player(player) {
       if(this.complete_vertical(player)) return true;
       if(this.complete_horizontal(player)) return true;
       if(this.complete_diagonal(player)) return true;
 
       return false;
     }
-  }
 
-  const show_result = () => {
-    if(globalThis.board.win(1)) {
-      if(globalThis.board.win(2)) {
-        document.getElementById("result").innerHTML = "draw";
+    judge_result = () => {
+      if(this.complete_player(1)) {
+        if(this.complete_player(2)) {
+          return "draw";
+        } else {
+          return "win 1";
+        }
       } else {
-        document.getElementById("result").innerHTML = "win 1";
-      }
-    } else {
-      if(globalThis.board.win(2)) {
-        document.getElementById("result").innerHTML = "win 2";
+        if(this.complete_player(2)) {
+          return "win 2";
+        } else {
+          return "";
+        }
       }
     }
+  }
+
+  const replace_piece = (piece, to_cell) => {
+    const from_cell = piece.closest(".board__cell");
+    if(from_cell) {
+      globalThis.board.remove(from_cell.dataset.x, from_cell.dataset.y);
+    }
+    globalThis.board.place(to_cell.dataset.x, to_cell.dataset.y, piece.dataset.player, piece.dataset.size);
+  }
+
+  const draw_display = (piece, to_cell) => {
+    to_cell.appendChild(piece);
+    document.getElementById("result").innerHTML = globalThis.board.judge_result();
+
   }
 
   const pieces = Array.from(document.getElementsByClassName("piece"));
@@ -103,18 +131,13 @@
     cell.addEventListener("drop", (event) => {
       const piece = document.getElementById(event.dataTransfer.getData('piece_id'));
       const to_cell = event.target.closest(".board__cell");
-      if(piece.dataset.size <= globalThis.board.cells[to_cell.dataset.y][to_cell.dataset.x].size()){
+      if(!globalThis.board.can_place(to_cell.dataset.x, to_cell.dataset.y, piece.dataset.size)) {
         alert("置けません");
         return;
       }
 
-      const from_cell = piece.closest(".board__cell");
-      if(from_cell) {
-        globalThis.board.cells[from_cell.dataset.y][from_cell.dataset.x].pieces.pop();
-      }
-      globalThis.board.cells[to_cell.dataset.y][to_cell.dataset.x].pieces.push(new Piece(piece.dataset.player, piece.dataset.size));
-      cell.appendChild(piece);
-      show_result();
+      replace_piece(piece, to_cell);
+      draw_display(piece, to_cell);
       event.preventDefault();
     });
   });
