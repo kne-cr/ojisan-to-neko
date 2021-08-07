@@ -88,13 +88,17 @@
     });
     cell.addEventListener("drop", (event) => {
       const piece = document.getElementById(event.dataTransfer.getData('piece_id'));
-      const cell = event.target.closest(".board__cell");
-      if(piece.dataset.size <= globalThis.board.cells[cell.dataset.y][cell.dataset.x].size()){
+      const to_cell = event.target.closest(".board__cell");
+      if(piece.dataset.size <= globalThis.board.cells[to_cell.dataset.y][to_cell.dataset.x].size()){
         alert("置けません");
         return;
       }
+      const from_cell = piece.closest(".board__cell");
+      if(from_cell) {
+        globalThis.board.cells[from_cell.dataset.y][from_cell.dataset.x].pieces.pop();
+      }
+      globalThis.board.cells[to_cell.dataset.y][to_cell.dataset.x].pieces.push(new Piece(piece.dataset.player, piece.dataset.size));
       cell.appendChild(piece);
-      globalThis.board.cells[cell.dataset.y][cell.dataset.x].pieces.push(new Piece(piece.dataset.player, piece.dataset.size));
       if(globalThis.board.win(1)) {
         if(globalThis.board.win(2)) {
           document.getElementById("result").innerHTML = "draw";
