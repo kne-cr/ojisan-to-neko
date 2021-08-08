@@ -140,6 +140,32 @@
 
       event.dataTransfer.setData('piece_id', event.target.id);
     });
+
+    piece.addEventListener("touchmove", (event) => {
+      event.preventDefault();
+      if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
+        alert("あなたの順番ではありません");
+      }
+    });
+
+    piece.addEventListener("touchend", (event) => {
+      const piece = event.target;
+      const touches = event.changedTouches[0];
+      const to_cell = document.elementFromPoint(
+        touches.pageX - window.pageXOffset,
+        touches.pageY - window.pageYOffset
+      ).closest(".board__cell");
+
+      if(!globalThis.board.can_place(to_cell.dataset.x, to_cell.dataset.y, piece.dataset.size)) {
+        alert("置けません");
+        return;
+      }
+
+      move_piece(piece, to_cell);
+      draw_display(piece, to_cell);
+      event.preventDefault();
+    });
+
   });
 
   Array.from(document.getElementsByClassName("board__cell")).forEach(cell => {
