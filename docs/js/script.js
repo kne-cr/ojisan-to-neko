@@ -135,6 +135,7 @@
     piece.addEventListener("dragstart", (event) => {
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
         alert("あなたの順番ではありません");
+        event.stopImmediatePropagation();
         return;
       }
 
@@ -145,6 +146,7 @@
       event.preventDefault();
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
         alert("あなたの順番ではありません");
+        event.stopImmediatePropagation();
       }
     });
 
