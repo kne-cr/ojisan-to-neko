@@ -22,8 +22,23 @@
     }
   }
 
+  class Turn {
+    constructor(player) {
+      this.player = player;
+    }
+
+    change() {
+      this.player = this.player === 1 ? 2 : 1;
+    }
+
+    of_player(player) {
+      return this.player == player;
+    }
+  }
+
   class Board {
     constructor() {
+      this.turn = new Turn(1);
       this.cells = Array(3);
       for (let col = 0; col < this.cells.length; col++) {
         this.cells[col] = [];
@@ -39,6 +54,7 @@
 
     place(x, y, player, size) {
       this.cells[y][x].pieces.push(new Piece(player, size));
+      this.turn.change();
     }
 
     remove(x, y) {
@@ -111,12 +127,17 @@
 
   const draw_display = (piece, to_cell) => {
     to_cell.appendChild(piece);
+    document.getElementById("message").innerHTML = `プレイヤー${this.board.turn.player}の番です`;
     document.getElementById("result").innerHTML = globalThis.board.judge_result();
-
   }
 
   Array.from(document.getElementsByClassName("piece")).forEach(piece => {
     piece.addEventListener("dragstart", (event) => {
+      if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
+        alert("あなたの順番ではありません");
+        return;
+      }
+
       event.dataTransfer.setData('piece_id', event.target.id);
     });
   });
