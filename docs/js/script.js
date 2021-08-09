@@ -16,6 +16,9 @@
       return size > this.pieces[this.pieces.length - 1].size;
     }
 
+    /**
+     * 引数のプレイヤーの駒が置かれている場合trueを返す。
+     */
     is_territory_of(player) {
       if (!this.pieces.length) return false;
       return this.pieces[this.pieces.length - 1].player == player;
@@ -27,10 +30,16 @@
       this.player = player;
     }
 
+    /**
+     * プレイヤーを交代する。
+     */
     change() {
       this.player = this.player === 1 ? 2 : 1;
     }
 
+    /**
+     * 引数のプレイヤーのターンの場合trueを返す。
+     */
     of_player(player) {
       return this.player == player;
     }
@@ -92,6 +101,9 @@
       return false;
     }
 
+    /**
+     * 引数のプレイヤーの駒が1列揃った場合trueを返す。
+     */
     complete_player(player) {
       if(this.complete_vertical(player)) return true;
       if(this.complete_horizontal(player)) return true;
@@ -132,6 +144,7 @@
   }
 
   Array.from(document.getElementsByClassName("piece")).forEach(piece => {
+    // PCのドラッグ
     piece.addEventListener("dragstart", (event) => {
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
         alert("あなたの順番ではありません");
@@ -142,6 +155,7 @@
       event.dataTransfer.setData('piece_id', event.target.id);
     });
 
+    // スマホのドラッグ
     piece.addEventListener("touchmove", (event) => {
       event.preventDefault();
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
@@ -150,6 +164,7 @@
       }
     });
 
+    // スマホのドロップ
     piece.addEventListener("touchend", (event) => {
       const piece = event.target;
       const touches = event.changedTouches[0];
@@ -172,9 +187,11 @@
 
   Array.from(document.getElementsByClassName("board__cell")).forEach(cell => {
     cell.addEventListener("dragover", (event) => {
+      // デフォルトのイベントが動いてしまいドロップできないため停止
       event.preventDefault();
     });
 
+    // PCのドロップ
     cell.addEventListener("drop", (event) => {
       const piece = document.getElementById(event.dataTransfer.getData('piece_id'));
       const to_cell = event.target.closest(".board__cell");
