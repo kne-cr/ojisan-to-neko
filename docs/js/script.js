@@ -154,27 +154,31 @@
   Array.from(document.getElementsByClassName("piece")).forEach(piece => {
     // PCのドラッグ
     piece.addEventListener("dragstart", (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
         alert("あなたの順番ではありません");
-        event.preventDefault();
-        event.stopImmediatePropagation();
         return;
       }
 
       event.dataTransfer.setData('piece_id', event.target.id);
     });
 
-    // スマホのドラッグ
     piece.addEventListener("touchmove", (event) => {
+      // デフォルトのイベントで画面が動いてしまうため停止
       event.preventDefault();
-      if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
-        alert("あなたの順番ではありません");
-        event.stopImmediatePropagation();
-      }
     });
 
     // スマホのドロップ
     piece.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
+        alert("あなたの順番ではありません");
+        return;
+      }
+
       const piece = event.target;
       const touches = event.changedTouches[0];
       const to_cell = document.elementFromPoint(
@@ -189,7 +193,6 @@
 
       move_piece(piece, to_cell);
       draw_display(piece, to_cell);
-      event.preventDefault();
     });
 
   });
@@ -202,6 +205,7 @@
 
     // PCのドロップ
     cell.addEventListener("drop", (event) => {
+      event.preventDefault();
       const piece = document.getElementById(event.dataTransfer.getData('piece_id'));
       const to_cell = event.target.closest(".board__cell");
       if(!globalThis.board.can_place(to_cell.dataset.x, to_cell.dataset.y, piece.dataset.size)) {
@@ -211,7 +215,6 @@
 
       move_piece(piece, to_cell);
       draw_display(piece, to_cell);
-      event.preventDefault();
     });
   });
 
