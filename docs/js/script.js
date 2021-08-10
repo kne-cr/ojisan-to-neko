@@ -140,7 +140,15 @@
   const draw_display = (piece, to_cell) => {
     to_cell.appendChild(piece);
     document.getElementById("message").innerHTML = `プレイヤー${this.board.turn.player}の番です`;
-    document.getElementById("result").innerHTML = globalThis.board.judge_result();
+    Array.from(document.getElementsByClassName("player")).forEach(player => {
+      player.classList.toggle("inactive");
+    });
+
+    const result = globalThis.board.judge_result();
+    if(result) {
+      document.getElementById("result").innerHTML = result;
+      document.getElementById("modal").style.display = "block";
+    }
   }
 
   Array.from(document.getElementsByClassName("piece")).forEach(piece => {

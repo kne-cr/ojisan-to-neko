@@ -1,6 +1,6 @@
-.game {
-  display: flex;
-  align-items: center;
+.main {
+  width: 300px;
+  margin: 0 auto;
 }
 
 .board {
@@ -17,12 +17,23 @@
 
 .player {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100px;
 }
 
-.player__piece {
+.player__big-piece {
+  width: 100px;
+  position: relative;
+}
+
+.player__middle-piece {
+  width: 80px;
+  position: relative;
+}
+
+.player__small-piece {
+  width: 55px;
   position: relative;
 }
 
@@ -37,47 +48,73 @@
   cursor: grab;
 }
 
-.big {
+.piece.big {
   width: 100px;
   height: 100px;
+  z-index: 103;
 }
 
-.middle {
+.piece.middle {
   width: 70px;
   height: 70px;
+  z-index: 102;
 }
 
-.small {
+.piece.small {
   width: 50px;
   height: 50px;
+  z-index: 101;
 }
 
 .player1.piece.big {
-  z-index: 103;
   background-image: url(../img/oji01@2x.png);
 }
 
 .player1.piece.middle {
-  z-index: 102;
   background-image: url(../img/oji02@2x.png);
 }
 
 .player1.piece.small {
-  z-index: 101;
   background-image: url(../img/oji03@2x.png);
 }
 
 .player2.piece.big {
-  z-index: 103;
   background-image: url(../img/neko01@2x.png);
 }
 
 .player2.piece.middle {
-  z-index: 102;
   background-image: url(../img/neko02@2x.png);
 }
 
 .player2.piece.small {
-  z-index: 101;
   background-image: url(../img/neko03@2x.png);
+}
+
+.player.inactive {
+  opacity: .3;
+}
+
+.modal {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vh;
+  background: #000c;
+  display: none;
+}
+
+.modal__message-box {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100px;
+  width: 200px;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
