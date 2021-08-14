@@ -47,22 +47,33 @@
   background-color: #0000001a;
 }
 
-.player-pieces__big {
+.player-pieces__place {
   width: 100px;
-  position: relative;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.player-pieces__middle {
-  width: 80px;
+.player-pieces__piece-1 {
+  width: 90px;
+  height: 90px;
   position: relative;
+  pointer-events: none;
 }
 
-.player-pieces__small {
-  width: 55px;
+.player-pieces__piece-2 {
+  width: 90px;
+  height: 90px;
+  margin-left: -80px;
   position: relative;
+  pointer-events: none;
 }
 
 .piece {
+  width: 90px;
+  height: 90px;
+  filter: drop-shadow(0px 0px 4px #000a);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -71,53 +82,45 @@
   background-position: center;
   background-repeat: no-repeat;
   cursor: grab;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
 }
 
-.piece.big {
-  width: 100px;
-  height: 100px;
-  z-index: 103;
+.big-piece {
+  z-index: 203;
 }
 
-.piece.middle {
-  width: 70px;
-  height: 70px;
-  z-index: 102;
+.big-piece__img {
+  width: 90px;
+  height: 90px;
+  pointer-events: none;
 }
 
-.piece.small {
+.middle-piece {
+  z-index: 202;
+}
+
+.middle-piece__img {
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+}
+
+.small-piece {
+  z-index: 201;
+}
+
+.small-piece__img {
   width: 50px;
   height: 50px;
-  z-index: 101;
-}
-
-.player1.piece.big {
-  background-image: url(../img/oji01@2x.png);
-}
-
-.player1.piece.middle {
-  background-image: url(../img/oji02@2x.png);
-}
-
-.player1.piece.small {
-  background-image: url(../img/oji03@2x.png);
-}
-
-.player2.piece.big {
-  background-image: url(../img/neko01@2x.png);
-}
-
-.player2.piece.middle {
-  background-image: url(../img/neko02@2x.png);
-}
-
-.player2.piece.small {
-  background-image: url(../img/neko03@2x.png);
+  pointer-events: none;
 }
 
 .modal {
   position: fixed;
-  z-index: 200;
+  z-index: 1000;
   top: 0;
   left: 0;
   height: 100vh;
