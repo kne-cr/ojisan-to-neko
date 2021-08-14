@@ -140,6 +140,7 @@
   const draw_display = (piece, to_cell) => {
     to_cell.appendChild(piece);
     Array.from(document.getElementsByClassName("player-pieces")).forEach(player => {
+      player.classList.toggle("active");
       player.classList.toggle("inactive");
     });
 

@@ -1,10 +1,12 @@
 .game {
-  background-color: #6dda86;
+  background-color: #75c187;
   background-image: url(../img/bg@3x.png);
   background-repeat: no-repeat;
   background-position: left top;
   background-size: 100% auto;
   padding-top: 80px;
+  /* 内部のmarginを確保するため */
+  padding-bottom: .1px;
 }
 
 .main {
@@ -29,6 +31,20 @@
   justify-content: center;
   align-items: center;
   height: 100px;
+  width: 300px;
+  border: 5px solid;
+  border-radius: 15px;
+  margin: 10px auto;
+}
+
+.player-pieces.active {
+  border-color: #09ea3e;
+  background-color: #abffbfcf;
+}
+
+.player-pieces.inactive {
+  border-color: transparent;
+  background-color: #0000001a;
 }
 
 .player-pieces__big {
@@ -97,10 +113,6 @@
 
 .player2.piece.small {
   background-image: url(../img/neko03@2x.png);
-}
-
-.player-pieces.inactive {
-  opacity: .3;
 }
 
 .modal {
