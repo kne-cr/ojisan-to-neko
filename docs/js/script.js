@@ -151,6 +151,19 @@
     }
   }
 
+  const follow_cursor =(event) => {
+      const touch = event.changedTouches[0];
+      event.target.style.position = "fixed";
+      event.target.style.top = `${touch.pageY - window.pageYOffset}px`;
+      event.target.style.left = `${touch.pageX - window.pageXOffset}px`;
+  }
+
+  const release_position = (target) => {
+    target.style.position = "";
+    target.style.top = "";
+    target.style.left = "";
+  }
+
   Array.from(document.getElementsByClassName("piece")).forEach(piece => {
     // PCのドラッグ
     piece.addEventListener("dragstart", (event) => {
@@ -166,6 +179,8 @@
     piece.addEventListener("touchmove", (event) => {
       // デフォルトのイベントで画面が動いてしまうため停止
       event.preventDefault();
+
+      follow_cursor(event);
     });
 
     // スマホのドロップ
@@ -173,6 +188,7 @@
       event.preventDefault();
       event.stopImmediatePropagation();
 
+      release_position(event.target);
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
         alert("あなたの順番ではありません");
         return;
