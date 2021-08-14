@@ -1,3 +1,12 @@
+.game {
+  background-color: #6dda86;
+  background-image: url(../img/bg@3x.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 100% auto;
+  padding-top: 80px;
+}
+
 .main {
   width: 300px;
   margin: 0 auto;
