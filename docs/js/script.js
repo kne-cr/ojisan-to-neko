@@ -154,7 +154,6 @@
   Array.from(document.getElementsByClassName("piece")).forEach(piece => {
     // PCのドラッグ
     piece.addEventListener("dragstart", (event) => {
-      event.preventDefault();
       event.stopImmediatePropagation();
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
         alert("あなたの順番ではありません");
