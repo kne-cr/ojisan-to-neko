@@ -140,7 +140,7 @@
   const draw_display = (piece, to_cell) => {
     to_cell.appendChild(piece);
     document.getElementById("message").innerHTML = `プレイヤー${this.board.turn.player}の番です`;
-    Array.from(document.getElementsByClassName("player")).forEach(player => {
+    Array.from(document.getElementsByClassName("player-pieces")).forEach(player => {
       player.classList.toggle("inactive");
     });
 

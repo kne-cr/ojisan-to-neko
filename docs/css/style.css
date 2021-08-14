@@ -15,24 +15,24 @@
   position: relative;
 }
 
-.player {
+.player-pieces {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
 }
 
-.player__big-piece {
+.player-pieces__big {
   width: 100px;
   position: relative;
 }
 
-.player__middle-piece {
+.player-pieces__middle {
   width: 80px;
   position: relative;
 }
 
-.player__small-piece {
+.player-pieces__small {
   width: 55px;
   position: relative;
 }
@@ -90,7 +90,7 @@
   background-image: url(../img/neko03@2x.png);
 }
 
-.player.inactive {
+.player-pieces.inactive {
   opacity: .3;
 }
 
