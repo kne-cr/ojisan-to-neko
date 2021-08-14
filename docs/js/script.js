@@ -179,12 +179,13 @@
       }
 
       const piece = event.target;
-      const touches = event.changedTouches[0];
+      const touch = event.changedTouches[0];
       const to_cell = document.elementFromPoint(
-        touches.pageX - window.pageXOffset,
-        touches.pageY - window.pageYOffset
+        touch.pageX - window.pageXOffset,
+        touch.pageY - window.pageYOffset
       ).closest(".board__cell");
 
+      if(!to_cell) return;
       if(!globalThis.board.can_place(to_cell.dataset.x, to_cell.dataset.y, piece.dataset.size)) {
         alert("置けません");
         return;
