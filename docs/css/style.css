@@ -1,3 +1,13 @@
+:root {
+  --board-border-width: 5px;
+  --board-border-color: #0003;
+  --board-border-radius: 15px;
+}
+
+body {
+  font-family: "M PLUS Rounded 1c";
+}
+
 .game {
   background-color: #75c187;
   background-image: url(../img/bg@3x.png);
@@ -18,8 +28,33 @@
 }
 
 .board__cell {
-  border: 1px solid #000;
+  border-right: var(--board-border-width) solid var(--board-border-color);
+  border-bottom: var(--board-border-width) solid var(--board-border-color);
   position: relative;
+}
+
+.board__cell.top {
+  border-top: var(--board-border-width) solid var(--board-border-color);
+}
+
+.board__cell.left {
+  border-left: var(--board-border-width) solid var(--board-border-color);
+}
+
+.board__cell.left.top {
+  border-start-start-radius: var(--board-border-radius);
+}
+
+.board__cell.right.top {
+  border-start-end-radius: var(--board-border-radius);
+}
+
+.board__cell.left.bottom {
+  border-end-start-radius: var(--board-border-radius);
+}
+
+.board__cell.right.bottom {
+  border-end-end-radius: var(--board-border-radius);
 }
 
 .player-pieces {

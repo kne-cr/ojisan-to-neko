@@ -1,4 +1,8 @@
 (() => {
+  const CANNOT_PLACE_MESSAGE = "空いている場所か小さな駒の上にしか置けません";
+  const NOT_TURN_PLAYER_MESSAGE = "あなたの順番ではありません";
+  const DRAW_MESSAGE = "ひきわけ";
+  const WIN_MESSAGE = "の勝ち！";
   class Piece {
     constructor(player, size) {
       this.player = player;
@@ -115,13 +119,13 @@
     judge_result = () => {
       if(this.complete_player(1)) {
         if(this.complete_player(2)) {
-          return "draw";
+          return DRAW_MESSAGE;
         } else {
-          return "win 1";
+          return `おじさんたち${WIN_MESSAGE}`;
         }
       } else {
         if(this.complete_player(2)) {
-          return "win 2";
+          return `ネコたち${WIN_MESSAGE}`;
         } else {
           return "";
         }
@@ -169,7 +173,7 @@
     piece.addEventListener("dragstart", (event) => {
       event.stopImmediatePropagation();
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
-        alert("あなたの順番ではありません");
+        alert(NOT_TURN_PLAYER_MESSAGE);
         return;
       }
 
@@ -190,7 +194,7 @@
 
       release_position(event.target);
       if(!globalThis.board.turn.of_player(event.target.dataset.player)) {
-        alert("あなたの順番ではありません");
+        alert(NOT_TURN_PLAYER_MESSAGE);
         return;
       }
 
@@ -203,7 +207,7 @@
 
       if(!to_cell) return;
       if(!globalThis.board.can_place(to_cell.dataset.x, to_cell.dataset.y, piece.dataset.size)) {
-        alert("置けません");
+        alert(CANNOT_PLACE_MESSAGE);
         return;
       }
 
@@ -225,7 +229,7 @@
       const piece = document.getElementById(event.dataTransfer.getData('piece_id'));
       const to_cell = event.target.closest(".board__cell");
       if(!globalThis.board.can_place(to_cell.dataset.x, to_cell.dataset.y, piece.dataset.size)) {
-        alert("置けません");
+        alert(CANNOT_PLACE_MESSAGE);
         return;
       }
 
