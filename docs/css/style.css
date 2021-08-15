@@ -4,21 +4,17 @@
   background-repeat: no-repeat;
   background-position: left top;
   background-size: 100% auto;
-  padding-top: 80px;
-  /* 内部のmarginを確保するため */
-  padding-bottom: .1px;
-}
-
-.main {
-  width: 300px;
-  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .board {
   display: grid;
   grid-template-rows: 100px 100px 100px;
   grid-template-columns: 100px 100px 100px;
-  margin: 0 auto;
+  margin: 5px auto;
 }
 
 .board__cell {
@@ -34,7 +30,7 @@
   width: 300px;
   border: 5px solid;
   border-radius: 15px;
-  margin: 10px auto;
+  margin: 5px auto;
 }
 
 .player-pieces.active {
