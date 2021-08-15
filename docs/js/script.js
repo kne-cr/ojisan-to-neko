@@ -239,4 +239,8 @@
   });
 
   globalThis.board = new Board();
+
+  document.getElementById("restart").addEventListener("click", (_event) => {
+    location.reload();
+  });
 })();
